@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Site Statement / Policy - Yotsuba-Choco</title>
+  <link rel="icon" href="../Background/Artist-B.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* 背景层：全屏图片 + 高模糊 + 暗色蒙版 */
+    .bg {
+      position: fixed; inset: 0;
+      background: url("statement-bg.jpg") center/cover no-repeat;
+      filter: blur(20px);
+      transform: scale(1.05); /* 防止边缘漏白 */
+      z-index: -2;
+    }
+    .bg::after{
+      content:"";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.55); /* 暗层，提升可读性 */
+      z-index: -1;
+    }
+
+    /* 顶部返回主站 */
+    .home-link{
+      position: fixed; top: 18px; left: 22px;
+      color: #fff; text-decoration: none;
+      font-weight: 700; letter-spacing: .5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,.35);
+      z-index: 2;
+    }
+
+    /* 内容容器：可滚动阅读 */
+    main{
+      max-width: 880px;
+      margin: 100px auto 80px;
+      padding: 28px 26px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(2px);
+      border-radius: 14px;
+      color: #fff;
+      line-height: 1.85;
+    }
+    h1{ font-size: 1.6rem; margin: 0 0 14px; }
+    h2{ font-size: 1.15rem; margin: 22px 0 10px; }
+    p{ margin: 0 0 12px; }
+    ul{ margin: 0 0 12px 1.1em; padding: 0; }
+    li{ margin: 6px 0; }
+    small{ opacity: .85; }
+    a{ color: #fff; text-decoration: underline; }
+
+    footer{
+      text-align: center;
+      color: #eaeaea;
+      font-size: .9rem;
+      padding: 24px 0 40px;
+    }
+
+    /* 移动端细节 */
+    @media (max-width: 640px){
+      main{ margin: 90px 14px 70px; padding: 18px 16px; }
+      .home-link{ left: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景 -->
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- 左上角返回主站（白字） -->
+  <a class="home-link" href="../Yotsuba-Choco-Official.en.html">Yotsuba-Choco</a>
+
+  <!-- 声明内容 -->
+<main>
+  <h1>Official Website Statement & Policy</h1>
+
+  <p>
+    This website (hereinafter "this site") is operated as the official webpage of the artist <strong>Yotsuba-Choco</strong> ( 四つ葉ココちゃん ).
+    The site aims to provide accurate artist information, organize music, video, and merchandise details, and support fan activities.
+  </p>
+
+  <h2>1. Copyright & Content Use</h2>
+  <ul>
+    <li>Unless otherwise noted, text, images, videos, audio, design, and other content on this site are owned by <strong>Yotsuba-Choco</strong>.</li>
+    <li>Text content may be quoted or referenced for non-commercial purposes with proper attribution (e.g., encyclopedias, wikis).</li>
+    <li>Redistribution, compilation, commercial use, or product tagging without written permission from the artist or rights holders is prohibited.</li>
+  </ul>
+
+  <h2>2. Music License & Cover Use</h2>
+  <ul>
+    <li>Music, lyrics, melodies, and arrangements published on this site are copyright protected.</li>
+    <li>Both vocal and instrumental covers under the CC BY-NC (Attribution-NonCommercial) license are welcome.</li>
+    <li>Please always credit when creating covers or derivative works, for example:<br>
+      <small>“Original: Yotsuba-Choco — “Colorful Sea” / Licensed under CC BY-NC”</small></li>
+    <li>For commercial use (monetization, sales, ads, etc.), please consult the artist or their agent in advance.</li>
+  </ul>
+
+  <h2>3. Website Operation Policy</h2>
+  <ul>
+    <li>The site emphasizes accuracy and transparency of artist information and aims to enhance fan convenience.</li>
+    <li>The site does not include content that promotes discrimination, hatred, violence, or extremism. Any misunderstanding or reports will be promptly investigated and addressed.</li>
+    <li>Fan support and information provision are prioritized; no membership fees are collected.</li>
+  </ul>
+
+  <h2>4. Disclaimer & External Links</h2>
+  <ul>
+    <li>This site may provide links to third-party services (distribution platforms, SNS, ticket sites, etc.), but is not responsible for transactions, errors, or damages on external sites.</li>
+    <li>Content, URLs, and design may change or be suspended without notice.</li>
+  </ul>
+
+  <h2>5. Cookies & Personal Information</h2>
+  <ul>
+    <li>The site currently does not intend to collect cookies or personal data. If collection occurs in the future, it will be stated on this page.</li>
+  </ul>
+
+  <h2>6. Contact</h2>
+  <ul>
+    <li>Content is primarily created and supervised by the artist.</li>
+    <li>For errors or issues, please contact:<br>
+      <strong>yotsuba.official@qq.com</strong></li>
+  </ul>
+
+  <h2>7. Final Notes</h2>
+  <ul>
+    <li>Text, images, and audio on this site are created according to the artist's intent.</li>
+    <li>Unauthorized reproduction, commercial use, or malicious derivative works are prohibited.</li>
+    <li>Use for fan activities or as informational support is welcomed.</li>
+  </ul>
+
+  <p><small>© Yotsuba-Choco / All content on this site is managed and supervised by the artist</small></p>
+</main>
+
+  <footer>2025 Yotsuba-Choco All Rights Reserved.</footer>
+</body>
+</html>

@@ -1,0 +1,246 @@
+/* ====== 全局 ====== */
+body {
+  margin: 0;
+  font-family: "Noto Sans JP", sans-serif;
+  color: #000;
+  overflow: hidden;
+
+  /* 背景图放大并模糊 */
+  background: url("../Background/Cloud-A.jpg") center center / cover no-repeat;
+  background-size: 110%; /* 放大10%避免白边 */
+  position: relative;
+}
+
+/* 半透明模糊遮罩层 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.5); /* 50% 白色透明层 */
+  backdrop-filter: blur(10px); /* 模糊效果 */
+  z-index: -1;
+}
+
+/* ====== 黑屏开场动画 ====== */
+#intro-screen {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  opacity:1;
+  transition: opacity 0.4s ease;
+}
+#intro-screen span {
+  color:white;
+  font-size:2.8rem;
+  font-weight:bold;
+  letter-spacing:2px;
+  text-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+
+/* ====== 回退按钮 ====== */
+.back-btn {
+  position: fixed;
+  top: 25px;
+  left: 35px;
+  font-size: 1.2rem;
+  color: #000000;
+  text-decoration: none;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.5s ease, transform 0.3s ease;
+}
+.back-btn:hover { transform: scale(1.05); }
+.back-btn.show { opacity: 1; }
+
+/* ====== 页面布局 ====== */
+.album-page {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* ====== 左侧：封面 + SoundCloud ====== */
+.album-left {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 更靠左 */
+  gap: 15px;
+  position: relative;
+}
+
+/* ====== 封面随机漂浮动画 ====== */
+@keyframes floatCoverSmooth {
+  0%   { transform: translate(0px, 0px) rotate(0deg); }
+  25%  { transform: translate(-5px, -6px) rotate(-0.3deg); }
+  50%  { transform: translate(4px, 5px) rotate(0.4deg); }
+  75%  { transform: translate(-3px, 3px) rotate(-0.2deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+.album-cover-img {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 5%;
+  animation: floatCoverSmooth 6s ease-in-out infinite;
+  cursor: pointer;
+  z-index: 2;
+  margin-left: -50px; /* 左移封面 */
+}
+.album-cover-img:hover { transform: scale(1.04); }
+
+/* ====== SoundCloud 播放器 ====== */
+.soundcloud {
+  width: 70%;
+  max-width: 480px;
+  margin-top: 20px;
+  margin-left: -40px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateY(-60px);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none; /* 避免悬停干扰 */
+}
+
+/* 显示动画 */
+.soundcloud.show {
+  animation: showSCSmooth 1.2s forwards;
+}
+@keyframes showSCSmooth {
+  0% { transform: translateY(-60px); opacity: 0; }
+  100% { transform: translateY(0px); opacity: 1; }
+}
+
+/* 隐藏动画 */
+.soundcloud.hide {
+  animation: hideSCSmooth 1.2s forwards;
+}
+@keyframes hideSCSmooth {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+
+.soundcloud iframe {
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* ====== 右侧文字框 ====== */
+.album-right {
+  flex: 0 0 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 1;
+  transition: transform 0.3s ease;
+}
+.album-right:hover { transform: scale(1.02); }
+
+.text-box {
+  background: rgba(0,0,0,0.9);
+  padding: 25px;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: inset 0 0 15px rgba(255,255,255,0.05);
+  line-height: 1.6;
+  height: 95vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+/* 隐藏滚动条 */
+.text-box::-webkit-scrollbar { width: 0; background: transparent; }
+.text-box { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* 渐显文字 */
+.text-box::before,
+.text-box::after {
+  content: "";
+  position: sticky;
+  top: 0; bottom: 0;
+  width: 100%;
+  height: 50px;
+  pointer-events: none;
+  z-index: 2;
+}
+.text-box::before { background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); }
+.text-box::after { background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); }
+
+/* ====== 文字样式 ====== */
+.album-right h1 { font-size:2.2rem; margin:0; letter-spacing:1px; }
+.album-right h2 { font-size:1.3rem; margin:5px 0; color:#fff; letter-spacing:0.5px; }
+.album-meta { margin:10px 0; font-size:0.95rem; color:#ccc; }
+.tracklist ul { list-style: disc; margin-left:20px; }
+.tracklist small { font-size:0.75rem; color:#aaa; }
+
+.story img {
+  width:100%;
+  border-radius:10px;
+  margin:12px 0;
+  box-shadow: 5px 5px 25px rgba(0,0,0,0.35);
+  transition: transform 0.3s ease;
+}
+.story img:hover { transform: scale(1.02); }
+
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap:18px;
+  margin-top:25px;
+}
+.platform { display: flex; flex-direction: column; align-items:center; width:80px; text-align:center; transition: transform 0.3s ease; }
+.platform img { width:45px; height:45px; margin-bottom:5px; }
+.platform:hover { transform: translateY(-3px); }
+
+.platforms a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.platforms a:visited {
+  color: inherit;
+}
+
+.platforms a:hover span {
+  color: #b35c00;
+}
+
+
+/* ====== 渐显动画 ====== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 1s forwards;
+}
+@keyframes fadeInUp {
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* ====== 响应式 ====== */
+@media screen and (max-width: 1024px) {
+  .album-page { flex-direction: column; padding: 40px 15px; }
+  .album-left, .album-right { flex: 1 1 100%; }
+  .album-left { align-items: center; }
+  .album-cover-img { max-width: 90%; margin-left: 0; }
+  .soundcloud { max-width: 90%; margin-left: 0; margin-top:-20px; }
+  .text-box { height: auto; min-height: 400px; }
+}
+
+/* ====== 歌词对齐 ====== */
+.lyrics { text-align: left; margin: 15px 0; line-height: 1.5em; font-size: 0.95rem; color: #fff; letter-spacing: 0.5px; }
+.lyrics p { margin: 0; padding: 0; }
+
+/* ====== MV区域 ====== */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.video-grid iframe { width: 100%; aspect-ratio: 16/9; border-radius: 12px; border: none; }

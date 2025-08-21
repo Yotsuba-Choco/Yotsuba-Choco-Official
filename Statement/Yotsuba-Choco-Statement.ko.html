@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>사이트 공지 / 정책 - Yotsuba-Choco</title>
+  <link rel="icon" href="../Background/Artist-B.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* 背景层：全屏图片 + 高模糊 + 暗色蒙版 */
+    .bg {
+      position: fixed; inset: 0;
+      background: url("statement-bg.jpg") center/cover no-repeat;
+      filter: blur(20px);
+      transform: scale(1.05); /* 防止边缘漏白 */
+      z-index: -2;
+    }
+    .bg::after{
+      content:"";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.55); /* 暗层，提升可读性 */
+      z-index: -1;
+    }
+
+    /* 顶部返回主站 */
+    .home-link{
+      position: fixed; top: 18px; left: 22px;
+      color: #fff; text-decoration: none;
+      font-weight: 700; letter-spacing: .5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,.35);
+      z-index: 2;
+    }
+
+    /* 内容容器：可滚动阅读 */
+    main{
+      max-width: 880px;
+      margin: 100px auto 80px;
+      padding: 28px 26px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(2px);
+      border-radius: 14px;
+      color: #fff;
+      line-height: 1.85;
+    }
+    h1{ font-size: 1.6rem; margin: 0 0 14px; }
+    h2{ font-size: 1.15rem; margin: 22px 0 10px; }
+    p{ margin: 0 0 12px; }
+    ul{ margin: 0 0 12px 1.1em; padding: 0; }
+    li{ margin: 6px 0; }
+    small{ opacity: .85; }
+    a{ color: #fff; text-decoration: underline; }
+
+    footer{
+      text-align: center;
+      color: #eaeaea;
+      font-size: .9rem;
+      padding: 24px 0 40px;
+    }
+
+    /* 移动端细节 */
+    @media (max-width: 640px){
+      main{ margin: 90px 14px 70px; padding: 18px 16px; }
+      .home-link{ left: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景 -->
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- 左上角返回主站（白字） -->
+  <a class="home-link" href="../Yotsuba-Choco-Official.ko.html">요츠바 코코쨩</a>
+
+  <!-- 声明内容 -->
+<main>
+  <h1>공식 사이트 선언 및 이용 정책</h1>
+
+  <p>
+    본 사이트(이하 "본 사이트")는 아티스트 <strong>요츠바 코코쨩</strong> (四つ葉ココちゃん)의 공식 웹페이지로 운영됩니다.
+    본 사이트는 아티스트 정보 제공, 음악·영상·굿즈 정보 정리, 팬 활동 지원을 목적으로 합니다.
+  </p>
+
+  <h2>1. 저작권 및 콘텐츠 이용</h2>
+  <ul>
+    <li>특별한 표기가 없는 한, 본 사이트 내의 글, 이미지, 영상, 음원, 디자인 및 기타 콘텐츠는 <strong>요츠바 코코쨩</strong>에 귀속됩니다.</li>
+    <li>글 콘텐츠는 출처 명시 및 비영리 목적에 한해 인용·참조가 허용됩니다(예: 백과사전, 위키 등).</li>
+    <li>콘텐츠 재배포, 무단 모음, 상업적 이용, 상품 태깅 등 2차 이용은 아티스트 또는 권리자의 서면 허가 없이 금지됩니다.</li>
+  </ul>
+
+  <h2>2. 음악 작품 라이선스 및 커버 이용</h2>
+  <ul>
+    <li>본 사이트에 게시된 곡, 가사, 멜로디, 편곡은 저작권으로 보호됩니다.</li>
+    <li>보컬 및 인스트 모두 CC BY-NC(저작자표시-비영리) 라이선스에 따른 커버 업로드를 환영합니다.</li>
+    <li>커버 및 2차 창작 시 반드시 출처 표기를 해주세요. 예:<br>
+      <small>“오리지널: 요츠바 코코쨩 — “ 채 해 ” / Licensed under CC BY-NC”</small></li>
+    <li>상업적 이용(수익화, 판매, 광고 등)의 경우, 사전에 아티스트 또는 대리인과 상담하세요.</li>
+  </ul>
+
+  <h2>3. 사이트 운영 방침</h2>
+  <ul>
+    <li>본 사이트는 정보 정확성과 투명성을 중시하며, 팬 편의성 향상을 위해 운영됩니다.</li>
+    <li>차별, 혐오, 폭력, 극단주의 등 행위를 조장하는 콘텐츠는 포함하지 않습니다. 오해나 신고가 있을 경우 신속히 조사·대응합니다.</li>
+    <li>팬 지원 및 정보 제공을 중시하며, 회원비는 받지 않습니다.</li>
+  </ul>
+
+  <h2>4. 면책사항 및 외부 링크</h2>
+  <ul>
+    <li>본 사이트는 제3자 서비스(배포 플랫폼, SNS, 티켓 사이트 등) 링크를 제공할 수 있으나, 외부 사이트 거래, 오류, 손해에 대한 책임을 지지 않습니다.</li>
+    <li>사이트 내용, URL 및 디자인은 사전 예고 없이 변경·중단될 수 있습니다.</li>
+  </ul>
+
+  <h2>5. 쿠키 및 개인정보</h2>
+  <ul>
+    <li>현재 본 사이트는 쿠키나 개인정보 수집을 의도하지 않습니다. 향후 수집 시, 본 페이지에 명시합니다.</li>
+  </ul>
+
+  <h2>6. 문의</h2>
+  <ul>
+    <li>사이트 내용은 원칙적으로 아티스트 본인이 제작·감수합니다.</li>
+    <li>오류나 문제가 있을 경우 연락처:<br>
+      <strong>yotsuba.official@qq.com</strong></li>
+  </ul>
+
+  <h2>7. 최종 주의 사항</h2>
+  <ul>
+    <li>사이트의 글, 이미지 및 음원은 아티스트 의도에 따라 제작되었습니다.</li>
+    <li>무단 전재, 상업적 이용, 악의적 2차 이용은 금지됩니다.</li>
+    <li>팬 활동을 위한 인용이나 정보 보조로의 사용은 환영합니다.</li>
+  </ul>
+
+  <p><small>© 요츠바 코코쨩 / 본 사이트 모든 콘텐츠는 아티스트 본인이 관리 및 감수</small></p>
+</main>
+
+  <footer>2025 Yotsuba-Choco All Rights Reserved.</footer>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>網站聲明 / 使用政策 - Yotsuba-Choco</title>
+  <link rel="icon" href="../Background/Artist-B.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* 背景层：全屏图片 + 高模糊 + 暗色蒙版 */
+    .bg {
+      position: fixed; inset: 0;
+      background: url("statement-bg.jpg") center/cover no-repeat;
+      filter: blur(20px);
+      transform: scale(1.05); /* 防止边缘漏白 */
+      z-index: -2;
+    }
+    .bg::after{
+      content:"";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.55); /* 暗层，提升可读性 */
+      z-index: -1;
+    }
+
+    /* 顶部返回主站 */
+    .home-link{
+      position: fixed; top: 18px; left: 22px;
+      color: #fff; text-decoration: none;
+      font-weight: 700; letter-spacing: .5px;
+      text-shadow: 0 2px 6px rgba(0,0,0,.35);
+      z-index: 2;
+    }
+
+    /* 内容容器：可滚动阅读 */
+    main{
+      max-width: 880px;
+      margin: 100px auto 80px;
+      padding: 28px 26px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(2px);
+      border-radius: 14px;
+      color: #fff;
+      line-height: 1.85;
+    }
+    h1{ font-size: 1.6rem; margin: 0 0 14px; }
+    h2{ font-size: 1.15rem; margin: 22px 0 10px; }
+    p{ margin: 0 0 12px; }
+    ul{ margin: 0 0 12px 1.1em; padding: 0; }
+    li{ margin: 6px 0; }
+    small{ opacity: .85; }
+    a{ color: #fff; text-decoration: underline; }
+
+    footer{
+      text-align: center;
+      color: #eaeaea;
+      font-size: .9rem;
+      padding: 24px 0 40px;
+    }
+
+    /* 移动端细节 */
+    @media (max-width: 640px){
+      main{ margin: 90px 14px 70px; padding: 18px 16px; }
+      .home-link{ left: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景 -->
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- 左上角返回主站（白字） -->
+  <a class="home-link" href="../Yotsuba-Choco-Official.tw.html">四葉可可醬（四叶可可酱）</a>
+
+  <!-- 声明内容 -->
+<main>
+  <h1>官方網站聲明與使用政策</h1>
+
+  <p>
+    本網站（以下簡稱“本網站”）作為藝術家 <strong>四葉可可醬</strong>（四つ葉ココちゃん）的官方網頁運營。
+    本網站旨在提供準確的藝術家資訊、整理音樂、影片及周邊商品資訊，並支援粉絲活動。
+  </p>
+
+  <h2>1. 版權與內容使用</h2>
+  <ul>
+    <li>除特別說明外，本網站內的文字、圖片、影片、音訊、設計及其他內容均歸 <strong>四葉可可醬</strong> 所有。</li>
+    <li>文字內容可在註明出處並僅限非營利目的下引用（例如百科、Wiki 等）。</li>
+    <li>未經藝術家或權利管理者書面許可，禁止內容再分發、轉載集合、商業使用及商品標記等二次使用。</li>
+  </ul>
+
+  <h2>2. 音樂作品的許可與翻唱</h2>
+  <ul>
+    <li>本網站所載歌曲、歌詞、旋律及編曲均受版權保護。</li>
+    <li>無論人聲或伴奏，歡迎基於 CC BY-NC（署名-非商業性）許可進行翻唱或發布。</li>
+    <li>翻唱或二次創作時，請務必標註來源，例如：<br>
+      <small>“原作: 四葉可可醬 — “彩海（さいかい）” / Licensed under CC BY-NC”</small></li>
+    <li>若用於商業用途（收益化、銷售或廣告分發等），請事先聯繫藝術家或代理人。</li>
+  </ul>
+
+  <h2>3. 網站運營方針</h2>
+  <ul>
+    <li>本網站重視資訊準確性與透明度，旨在提升粉絲使用便利性。</li>
+    <li>網站不包含助長歧視、仇恨、暴力或極端主義內容。如有誤解或報告，將立即調查並處理。</li>
+    <li>重視粉絲支援與資訊提供，不收取會員費用。</li>
+  </ul>
+
+  <h2>4. 免責聲明與外部連結</h2>
+  <ul>
+    <li>本網站可能提供第三方服務（分發平台、SNS、票務網站等）連結，但不對外部網站交易、故障或損失承擔責任。</li>
+    <li>本網站內容、URL 與設計可能會在無預告的情況下變更或停止。</li>
+  </ul>
+
+  <h2>5. Cookie 與個人資訊</h2>
+  <ul>
+    <li>目前本網站不收集 Cookie 或個人資訊。若將來收集，會在本頁明確說明。</li>
+  </ul>
+
+  <h2>6. 聯絡方式</h2>
+  <ul>
+    <li>網站內容原則上由藝術家本人製作或監督。</li>
+    <li>如發現錯誤或問題，請聯絡：<br>
+      <strong>yotsuba.official@qq.com</strong></li>
+  </ul>
+
+  <h2>7. 最終注意事項</h2>
+  <ul>
+    <li>本網站的文字、圖片及音訊均基於藝術家本人意圖製作。</li>
+    <li>禁止未經許可轉載、商業使用及惡意二次創作。</li>
+    <li>為粉絲活動引用或作為資訊輔助的使用是被允許的。</li>
+  </ul>
+
+  <p><small>© 四葉可可醬 / 本網站所有內容由藝術家本人管理與監督</small></p>
+</main>
+
+  <footer>2025 Yotsuba-Choco All Rights Reserved.</footer>
+</body>
+</html>

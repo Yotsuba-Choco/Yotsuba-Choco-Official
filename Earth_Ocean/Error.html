@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error - Yotsuba-Choco</title>
+  <style>
+    /* ====== 全局样式 ====== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Noto Sans', sans-serif;
+      background: #f5f5f5;
+      overflow: hidden;
+      text-align: center;
+      color: #333;
+    }
+
+    /* ====== 主标题 ====== */
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      cursor: pointer;
+      /* 渐变背景 */
+      background: linear-gradient(45deg, #d33, #e67e22, #f1c40f);
+      /* 文字裁剪渐变 - WebKit */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      /* 文字裁剪渐变 - 标准兼容 */
+      background-clip: text;
+      color: transparent;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+      animation: float 3s ease-in-out infinite alternate;
+    }
+
+    h1:hover {
+      transform: scale(1.2);
+      text-shadow: 0 0 15px rgba(255,140,0,0.6);
+    }
+
+    /* ====== 提示文字 ====== */
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 8px 0;
+      max-width: 600px;
+      transition: transform 0.3s ease;
+    }
+
+    p:hover {
+      transform: scale(1.05);
+    }
+
+    /* ====== 漂浮动画 ====== */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* ====== 语言颜色区分（可选） ====== */
+    .zh { color: #e74c3c; }
+    .jp { color: #3498db; }
+    .en { color: #2ecc71; }
+    .fr { color: #9b59b6; }
+    .ko { color: #f39c12; }
+
+  </style>
+</head>
+<body>
+
+  <h1 onclick="goHome()">ERROR！ε＝ε＝ε＝(#>д<)ﾉﾉ</h1>
+
+  <p class="zh">我们不小心遇见了错误的世界！这里也许没有开放，或者正在维护。</p>
+  <p class="jp">間違った世界に出会ってしまいました！ここはまだ開放されていないか、メンテナンス中かもしれません。</p>
+  <p class="en">We accidentally stumbled into an error world! It may not be open yet or is under maintenance.</p>
+  <p class="fr">Nous sommes tombés dans un monde d'erreur ! Il n'est peut-être pas encore ouvert ou en maintenance.</p>
+  <p class="ko">잘못된 세계에 도착했습니다! 아직 공개되지 않았거나 유지보수 중일 수 있습니다.</p>
+
+  <p>尝试在其他语言页面进入 / 他の言語ページから試してください / Try other language pages / Essayez une autre langue / 다른 언어 페이지를 시도해보세요</p>
+  <p>此页面会在 30 秒后自动回到主站 / 30秒後に自動でトップページに戻ります / This page will automatically return in 30 seconds / Cette page reviendra automatiquement dans 30 secondes / 30초 후 자동으로 메인 페이지로 돌아갑니다</p>
+
+  <script>
+    function goHome() {
+      window.location.href = "../Yotsuba-Choco-Official.html";
+    }
+
+    // 30秒后自动回主页
+    setTimeout(goHome, 30000);
+  </script>
+</body>
+</html>
