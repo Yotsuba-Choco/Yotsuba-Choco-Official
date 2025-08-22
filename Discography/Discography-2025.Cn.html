@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>唱片目录（2025） - 四葉可可醬</title>
+  <link rel="stylesheet" href="Discography-2025.css">
+  <link rel="icon" href="../Background/Kotou-A.png" type="image/png">
+
+  <!-- Open Graph（社交分享用） -->
+  <meta property="og:title" content="唱片目录 - 四葉可可醬">
+  <meta property="og:description" content="唱片目录 - Love And Lovely">
+  <meta property="og:image" content="../Background/Kotou-A.png">
+  <meta property="og:type" content="music.album">
+  <meta property="og:url" content="https://yotsuba-choco.com/Discography/Discography-2025.Cn.html">
+</head>
+<body>
+
+  <div id="bg-layer"></div>
+
+  <header>
+    <h1>唱片目录</h1>
+    <h3>唱片目录 / 四葉可可醬</h3>
+    <p>毎年如影随形依偎在一起的，就是一张张唱片</p><br>
+  </header>
+
+  <!-- 排序与搜索控制栏 -->
+  <div id="disc-control">
+    <label for="sort-select">排序：</label>
+    <select id="sort-select">
+      <option value="date" selected>按发行日期排序</option>
+      <option value="name">按专辑名称排序</option>
+    </select>
+
+    <label for="search-input">搜索：</label>
+    <input type="text" id="search-input" placeholder="请输入唱片名称">
+  </div>
+
+  <!-- 回退按钮 -->
+  <a href="../Yotsuba-Choco-Official.cn.html" class="back-btn">&lt; 回退</a>
+
+  <main>
+    <section id="discography-2025">
+      <div class="discography-container">
+        <a href="../album/Kotou-20250714001.cn.html" class="disc-item" data-date="2025-07-14" data-name="彩海（さいかい）">
+          <img src="../album/彩海（Cover）.png" alt="彩海（さいかい）">
+          <div class="disc-hover">彩海</div>
+        </a>
+        <a href="../album/Kotou-20250810002.cn.html" class="disc-item" data-date="2025-08-10" data-name="未来窗户">
+          <img src="../album/Future Window（Cover）.png" alt="Future Window">
+          <div class="disc-hover">未来窗户</div>
+        </a>
+        <a href="../album/Kotou-20250828003.cn.html" class="disc-item" data-date="2025-08-28" data-name="湛色夏日">
+          <img src="../album/澄んだ夏日（Cover）.png" alt="澄んだ夏日">
+          <div class="disc-hover">湛色夏日</div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div id="cursor-dot"></div>
+
+  <script src="Discography-2025.js"></script>
+
+</body>
+</html>

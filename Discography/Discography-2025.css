@@ -1,0 +1,350 @@
+/* ====================== 基础重置 & 背景 ====================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", "Noto Sans SC", "Noto Sans TC", "Noto Sans KR", sans-serif;
+}
+
+#bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 110%;
+  height: 110%;
+  background: url('../Background/Kotou-H.jpg') center center / cover no-repeat;
+  filter: blur(10px) contrast(1.05);
+  z-index: -1;
+  pointer-events: none;
+  transform: translate(-5%, -5%);
+  animation: bgFloat 30s ease-in-out infinite alternate;
+}
+
+/* ===== 回退按钮 ===== */
+.back-btn {
+  position: fixed;
+  top: 25px;
+  left: 35px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-decoration: none;
+  color: #fff;
+  z-index: 10000;
+  transition: all 0.5s ease, transform 0.3s ease;
+}
+body.white-bg .back-btn { color: black; }
+body.dark-mode .back-btn { color: white; }
+
+/* ====================== 页面标题 ====================== */
+header {
+  text-align: center;
+  margin: 40px 0 20px 0;
+}
+
+/* 标题 h1 */
+header h1 {
+  font-size: 3rem;
+  font-weight: 900; 
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow:
+    0 2px 3px rgba(0,0,0,0.25),
+    0 4px 6px rgba(0,0,0,0.15); /* 阴影更聚集且更淡 */
+  display: inline-block;
+  transition: transform 0.3s ease;
+  animation: headerFloat 6s ease-in-out infinite alternate;
+}
+
+/* h1 鼠标悬停放大 */
+header h1:hover {
+  transform: scale(1.14) translateY(-6px);
+}
+
+/* 副标题 p */
+header p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.2),
+    0 2px 4px rgba(0,0,0,0.12); /* 阴影更集中且轻 */
+  display: inline-block;
+  transition: transform 0.3s ease;
+  animation: headerFloatAlt 7s ease-in-out infinite alternate;
+}
+
+/* p 鼠标悬停放大 */
+header p:hover {
+  transform: scale(1.1) translateY(-4px);
+}
+
+/* 标题浮动动画 */
+@keyframes headerFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes headerFloatAlt {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* ====================== 漂浮动画 ====================== */
+@keyframes headerFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes headerFloatAlt {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+
+/* ====================== 专辑列表容器 ====================== */
+.discography-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px; /* 增加间距，从24px改为32px */
+  justify-content: flex-start;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+/* ====================== 封面动画 ====================== */
+.disc-item {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35), 0 0 10px rgba(255,255,255,0.1);
+  /* border: 1px solid rgba(255,255,255,0.08); 去掉白边 */
+  border-radius: 8px;
+  cursor: pointer;
+  animation: floatElement 6s ease-in-out infinite;
+}
+
+/* 封面图片略微放大 + 居中 */
+.disc-item img {
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  transform: translate(-5%, -5%);
+  transition: transform 0.4s ease;
+}
+
+/* 悬停效果：再进一步放大 + 浮动 + 阴影加强 */
+.disc-item:hover {
+  transform: scale(1.12) translateY(-8px) rotate(1deg);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.55), 0 0 20px rgba(255,255,255,0.15);
+}
+
+/* ====================== 封面漂浮动画 ====================== */
+@keyframes floatElement {
+  0%   { transform: scale(1.03) translateY(0) rotate(0deg); }
+  50%  { transform: scale(1.07) translateY(-4px) rotate(1deg); }
+  100% { transform: scale(1.03) translateY(0) rotate(0deg); }
+}
+
+/* ====================== 悬停文字遮罩 ====================== */
+.disc-hover {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(38, 37, 37, 0.7);
+  transition: bottom 0.4s ease;
+}
+
+.disc-item:hover .disc-hover {
+  bottom: 0;
+  animation: textFloat 2s ease-in-out infinite alternate;
+}
+
+/* ====================== 响应式调整 ====================== */
+@media(max-width: 600px){
+  .disc-item {
+    width: 45%;
+    height: auto;
+  }
+}
+
+@media(max-width: 400px){
+  .disc-item {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* ====================== 动画 ====================== */
+/* 封面漂浮 */
+@keyframes floatElement {
+  0%   { transform: scale(1.03) translateY(0) rotate(0deg); }
+  50%  { transform: scale(1.07) translateY(-4px) rotate(1deg); }
+  100% { transform: scale(1.03) translateY(0) rotate(0deg); }
+}
+
+/* 背景漂浮慢动画 */
+@keyframes bgFloat {
+  0%   { transform: translate(-5%, -5%) scale(1.1); }
+  50%  { transform: translate(-6%, -6%) scale(1.11); }
+  100% { transform: translate(-5%, -5%) scale(1.1); }
+}
+
+/* 文字漂浮 */
+@keyframes textFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+/* ====================== 鼠标圆点 ====================== */
+#cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(178,120,203,0.8), rgba(255,182,193,0.6));
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s ease, height 0.15s ease, background 0.25s ease, transform 0.25s ease;
+  z-index: 2147483647;
+}
+
+#cursor-dot.active {
+  border-radius: 0%;
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+}
+
+/* ====================== 排序与搜索控制栏 ====================== */
+#disc-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.05);  /* 轻透明玻璃感 */
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+  font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", sans-serif;
+  animation: floatControl 6s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 控件微漂浮动画 */
+@keyframes floatControl {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+/* 鼠标悬停控件整体放大 */
+#disc-control:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+}
+
+/* select 下拉框 */
+#disc-control select {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* 鼠标悬停 select */
+#disc-control select:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.08);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+
+/* select 内部选项文字可见 */
+#disc-control select option {
+  color: #000;          /* 黑色文字 */
+  background: #fff;     /* 白色背景 */
+  padding: 4px 8px;
+}
+
+#disc-control select option:hover {
+  background: #f0f0f0;
+}
+
+/* 搜索输入框 */
+#disc-control input[type="text"] {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.95rem;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#disc-control input[type="text"]::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+#disc-control input[type="text"]:hover,
+#disc-control input[type="text"]:focus {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.08);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  outline: none;
+}
+
+/* label 样式 */
+#disc-control label {
+  font-size: 0.9rem;
+  color: #fff;
+  user-select: none;
+  transition: transform 0.25s ease;
+}
+
+/* 鼠标悬停 label 放大 */
+#disc-control label:hover {
+  transform: scale(1.05);
+}
+
+/* 响应式调整，移动端适配 */
+@media(max-width: 600px) {
+  #disc-control {
+    top: 10px;
+    right: 10px;
+    padding: 10px 12px;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  #disc-control select,
+  #disc-control input[type="text"] {
+    font-size: 0.85rem;
+  }
+}
