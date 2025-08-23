@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)/index.html",
+      "destination": "/$1/index.html"
+    },
+    {
+      "source": "/index.html",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)/index.html",
+      "destination": "/$1/",
+      "statusCode": 301
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "statusCode": 301
+    }
+  ]
+}
