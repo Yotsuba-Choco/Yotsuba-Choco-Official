@@ -5,7 +5,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", "Noto Sans SC", "Noto Sans TC", "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans KR", "Montserrat", sans-serif;
 }
 
 #bg-layer {
@@ -32,6 +32,7 @@ html, body {
   text-decoration: none;
   color: #fff;
   z-index: 10000;
+  text-shadow: 2px 3px 2px rgba(0,0,0,0.45);
   transition: all 0.5s ease, transform 0.3s ease;
 }
 body.white-bg .back-btn { color: black; }
@@ -45,39 +46,61 @@ header {
 
 /* 标题 h1 */
 header h1 {
-  font-size: 3rem;
-  font-weight: 900; 
-  margin-bottom: 10px;
-  color: #fff;
-  text-shadow:
-    0 2px 3px rgba(0,0,0,0.25),
-    0 4px 6px rgba(0,0,0,0.15); /* 阴影更聚集且更淡 */
-  display: inline-block;
-  transition: transform 0.3s ease;
-  animation: headerFloat 6s ease-in-out infinite alternate;
+  font-family: "Montserrat", "Zen Kaku Gothic New", sans-serif;
+  font-size: 3.8rem;  /* 更大更舞台感 */
+  font-weight: 900;
+  letter-spacing: 0.05em; /* 拉开字距 */
+  margin-bottom: 12px;
+  Color:white;
+  text-shadow:2px 3px 2px rgba(0,0,0,0.55);
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
 }
 
-/* h1 鼠标悬停放大 */
+/* hover 呼吸感 */
 header h1:hover {
-  transform: scale(1.14) translateY(-6px);
+  transform: scale(1.12) translateY(-6px);
+  letter-spacing: 0.12em;
 }
 
-/* 副标题 p */
-header p {
+/* 作者 / 说明类 h3 样式 */
+header h3 {
+  font-family: "Montserrat", "Noto Sans JP", "Noto Sans SC", sans-serif;
   font-size: 1.2rem;
-  font-weight: 700;
-  color: #fff;
-  text-shadow:
-    0 1px 2px rgba(0,0,0,0.2),
-    0 2px 4px rgba(0,0,0,0.12); /* 阴影更集中且轻 */
-  display: inline-block;
-  transition: transform 0.3s ease;
-  animation: headerFloatAlt 7s ease-in-out infinite alternate;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.85);
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.45);
+  margin-top: 6px;
+
+  /* 漂浮动画 */
+  animation: headerFloatAlt 8s ease-in-out infinite alternate;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
 }
 
-/* p 鼠标悬停放大 */
+header h3:hover {
+  transform: scale(1.05) translateY(-3px);
+  letter-spacing: 0.04em;
+}
+
+
+/* header 内所有副标题类文字 */
+header p {
+  font-family: "Montserrat", "Noto Sans JP", "Noto Sans SC", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 2px 3px 2px rgba(0,0,0,0.45);
+  margin-top: 8px;
+  
+  /* 所有 p 默认浮动动画 */
+  animation: headerFloatAlt 7s ease-in-out infinite alternate;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+  display: inline-block; /* 确保动画生效 */
+}
+
+/* 悬停所有副标题 */
 header p:hover {
-  transform: scale(1.1) translateY(-4px);
+  transform: scale(1.06) translateY(-3px);
+  letter-spacing: 0.05em;
 }
 
 /* 标题浮动动画 */
@@ -169,7 +192,7 @@ header p:hover {
   font-weight: bold;
   font-size: 1.5rem;
   color: #fff;
-  text-shadow: 0 2px 6px rgba(38, 37, 37, 0.7);
+  text-shadow: 0 2px 2px rgba(38, 37, 37, 0.7);
   transition: bottom 0.4s ease;
 }
 

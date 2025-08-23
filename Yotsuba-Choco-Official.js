@@ -41,62 +41,6 @@ volumeControl.addEventListener('input', e => {
   globalVolume = parseFloat(e.target.value);
 });
 
-// ==== 音效文件列表 ====
-const soundFiles = {
-  'Sound/Groove': [
-    { file: 'Kick.wav', weight: 7 },
-    { file: 'Kick_Crash.wav', weight: 2 },
-    { file: 'Kick_Sub.wav', weight: 3 },
-    { file: 'Snare_1.wav', weight: 5 },
-    { file: 'Snare_2.wav', weight: 5 },
-    { file: 'Drum_01.wav', weight: 2 },
-    { file: 'Drum_02.wav', weight: 2 },
-    { file: 'Drum_03.wav', weight: 2 },
-    { file: 'Drum_Over.wav', weight: 2 },
-    { file: 'Drum_Over_02.wav', weight: 2 },
-    { file: 'Crash_1.wav', weight: 2 },
-    { file: 'Groove.wav', weight: 0.2 } 
-  ],
-  'Sound/Bass': [
-    { file: 'Bass-D.wav', weight: 5 },
-    { file: 'Bass-E.wav', weight: 5 },
-    { file: 'Bass-Db.wav', weight: 5 },
-    { file: 'Bass-Gb.wav', weight: 5 },
-    { file: 'Bass-A.wav', weight: 3 }
-  ],
-  'Sound/Organ': [
-    { file: 'Organ-C5.wav', weight: 3 },
-    { file: 'Organ-D5.wav', weight: 3 },
-    { file: 'Organ-E5.wav', weight: 3 },
-    { file: 'Organ-F5.wav', weight: 3 },
-    { file: 'Organ-Gb5.wav', weight: 2 },
-    { file: 'Organ-G5.wav', weight: 3 },
-    { file: 'Organ-Ab5.wav', weight: 2 },
-    { file: 'Organ-A5.wav', weight: 3 },
-    { file: 'Organ-Bb5.wav', weight: 2 },
-    { file: 'Organ-B5.wav', weight: 3 },
-    { file: 'Organ-C6.wav', weight: 3 },
-    { file: 'Organ-Music-01.wav', weight: 0.2 }
-  ],
-  'Sound/Piano': [
-    { file: 'Piano-A-Fmaj7.wav', weight: 6 },
-    { file: 'Piano-A-G.wav', weight: 6 },
-    { file: 'Piano-A-E7.wav', weight: 5 },
-    { file: 'Piano-A-Am.wav', weight: 5 },
-    { file: 'Piano-A-Cmaj7.wav', weight: 1 }
-  ],
-  'Sound/Musicbox': [
-    { file: 'Musicbox-E6.wav', weight: 2 },
-    { file: 'Musicbox-Gb6.wav', weight: 2 },
-    { file: 'Musicbox-Ab6.wav', weight: 2 },
-    { file: 'Musicbox-A6.wav', weight: 1 },
-    { file: 'Musicbox-B6.wav', weight: 2 },
-    { file: 'Musicbox-Db7.wav', weight: 2 },
-    { file: 'Musicbox-Eb7.wav', weight: 1 },
-    { file: 'Musicbox-E7.wav', weight: 1 }
-]
-};
-
 // ==== 随机权重选择单音效 ====
 function getRandomWeightedSound(folder) {
   const list = soundFiles[folder];
@@ -369,4 +313,49 @@ toggleBtn.addEventListener('click', () => {
   }
 
   isOpen = !isOpen;
+});
+
+
+
+// ==========================
+// 🔹 全局音频预加载初始化（自动从 soundFiles 获取）
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+  const preloadedAudios = [];
+
+  // 遍历 soundFiles 中的所有文件夹和文件
+  if (typeof soundFiles !== "undefined") {
+    Object.keys(soundFiles).forEach(folder => {
+      soundFiles[folder].forEach(entry => {
+        const src = `${folder}/${entry.file}`;
+        const a = new Audio(src);
+        a.preload = "auto";
+        a.volume = globalVolume || 0.7;
+        preloadedAudios.push(a);
+      });
+    });
+  }
+
+  console.log("[Init] 已预加载音效数量:", preloadedAudios.length);
+
+  // ===== 专辑过场音效单独预加载 =====
+  const albumSounds = {
+    "主打歌": "Sound/KotouSound_01.wav",
+    "短い歌": "Sound/KotouSound_02.wav",
+    "核心曲目": "Sound/KotouSound_05.wav"
+  };
+
+  const albumCache = {};
+  for (const type in albumSounds) {
+    const a = new Audio(albumSounds[type]);
+    a.preload = "auto";
+    a.volume = globalVolume || 0.7;
+    albumCache[type] = a;
+  }
+
+  console.log("[Init] 专辑音效已预加载:", Object.keys(albumCache));
+
+  // ===== 挂到全局变量，方便调试和调用 =====
+  window.__preloadedAudios = preloadedAudios;
+  window.__albumAudioCache = albumCache;
 });

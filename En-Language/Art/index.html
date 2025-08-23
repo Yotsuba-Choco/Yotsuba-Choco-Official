@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Art-Choco.EN Gallery</title>
+<link rel="icon" href="../../Background/Artist-B.png" type="image/png">
+<link rel="stylesheet" href="../../Art/Art-Choco.css">
+
+<!-- 基础 SEO -->
+<meta name="description" content="Art-Choco - Museum of Digital Art and Photography Works">
+<meta name="keywords" content="Art-Choco, Digital Art, Photography, Museum, Gallery">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Art-Choco">
+<meta property="og:description" content="Museum of Digital Art and Photography Works">
+<meta property="og:image" content="../../Background/Background.png">
+<meta property="og:url" content="https://www.yotsuba-choco.com/Art/">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Art-Choco">
+<meta name="twitter:description" content="Museum of Digital Art and Photography Works">
+<meta name="twitter:image" content="../../Background/Background.png">
+<meta name="twitter:site" content="@Yotsuba_Choco">
+
+</head>
+<body>
+
+<a href="../index.html" class="back-btn">&lt; Back to Main Site</a>
+
+<header>Gallery</header>
+
+<div id="search-container">
+  <input type="text" id="search-input" placeholder="Search by title, artist, or date…">
+  <button class="sort-btn" id="sort-btn">Sort by Date Asc/Desc</button>
+</div>
+
+<section class="gallery" id="gallery">
+
+  <!-- Artwork Card -->
+  <div class="art-card" data-title="Cocoa And Kokoa Portrait" data-creator="Yotsuba Choco" data-date="2025-04-10">
+    <a href="https://www.pixiv.net/artworks/129160194" target="_blank">
+      <img src="../../Art/Artworks/Choco~.png" alt="Cocoa And Kokoa Portrait">
+    </a>
+    <div class="art-info">
+      <div class="art-title"><h3>Cocoa And Kokoa Portrait</h3></div>
+      <div class="art-creator"><h4>Artist: Yotsuba Choco</h4></div>
+      <div class="art-date"><h5>2025-04-10</h5></div>
+      <div class="art-desc">I quickly drew a portrait of Choco and Kokoa together</div><br>
+    </div>
+  </div>
+
+  <!-- You can continue adding more artwork cards here -->
+
+</section>
+
+<div class="gallery" id="gallery"></div>
+
+<!-- Cursor Dot -->
+<div id="cursor-dot"></div>
+
+<script src="../../Art/Art-Choco.js"></script>
+</body>
+</html>

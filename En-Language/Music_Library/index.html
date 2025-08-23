@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinyl Shadow</title>
+<link rel="icon" href="../../Background/Artist-B.png" type="image/png">
+<style>
+body {
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic Pro","メイリオ",sans-serif;
+  transition: background 1.2s ease, color 1.2s ease;
+  overflow-x: hidden;
+}
+
+/* 背景模式 */
+body.white-bg { background-color: #f8f8f8; color: #101010; }
+body.dark-mode { background-color: #111; color: #fff; }
+
+/* ===== 顶栏文字悬浮 ===== */
+.header {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  padding: 1em 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.header div {
+  cursor: pointer;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  transition: color 0.5s ease, transform 0.3s ease;
+  position: relative;
+  transform: scale(1.1);
+}
+
+/* 顶栏颜色：白背景 */
+body.white-bg .header div#tab-record.active { color: #c85050; }   /* 红色 */
+body.white-bg .header div#tab-project.active { color: #000; }     /* 黑色 */
+body.white-bg .header div.inactive { color: #666; }
+
+/* 顶栏颜色：黑背景 */
+body.dark-mode .header div#tab-record.active { color: #fff; }     /* 白色 */
+body.dark-mode .header div#tab-project.active { color: #9b59b6; } /* 紫色 */
+body.dark-mode .header div.inactive { color: #999; }
+
+/* ===== 微浮动残影动画 ===== */
+@keyframes float {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-3px) scale(1.01); }
+  100% { transform: translateY(0px) scale(1); }
+}
+.float { animation: float 3s ease-in-out infinite; }
+
+/* ===== 微呼吸动画 ===== */
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+  100% { transform: scale(1); }
+}
+.breathe {
+  animation-name: breathe;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* ===== 残影内容区 ===== */
+.section { 
+  max-width: 900px; 
+  margin: 2em auto; 
+  transition: opacity 0.8s ease, transform 0.8s ease; 
+}
+.section.hidden { display: none; }
+
+/* ===== 音乐条 ===== */
+.music-library-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+.music-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8em 1em;
+  background-color: rgba(255,255,255,0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.music-item:hover {
+  background-color: rgba(255,255,255,1);
+  transform: scale(1.06);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.music-info { display: flex; flex-direction: column; }
+.music-title { font-weight: bold; font-size: 1.1em; color: #222; }
+.music-artist { font-size: 0.9em; color: #60637d; margin-top: 0.25em; }
+.music-controls { display: flex; align-items: center; gap: 0.6em; }
+.play-btn { font-size: 1.2em; border: none; background: none; cursor: pointer; color: #444; }
+.play-btn:hover { color: #000; }
+.progress-container { width: 150px; height: 6px; background-color: #ddd; border-radius: 3px; overflow: hidden; cursor: pointer; }
+.progress-bar { width: 0%; height: 100%; background-color: #9b59b6; transition: width 0.2s linear; }
+.volume-input { width: 40px; text-align: center; font-size: 0.9em; }
+
+/* ===== 文字播放控制 ===== */
+.loop-text {
+  cursor: pointer;
+  font-size: 0.95em;
+  color: #999;
+  user-select: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.loop-text.active { color: #9b59b6; transform: scale(1.05); }
+.loop-text.float { animation: float 2s ease-in-out infinite; }
+
+/* ===== 视频区 ===== */
+.video-library-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+.video-item {
+  position: relative;
+}
+.video-item video {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transition: transform 0.4s ease;
+}
+.video-item video:hover { transform: scale(1.02); }
+.video-caption {
+  font-size: 0.8em;
+  color: #cfc6c6;
+  margin-top: 0.3em;
+  text-align: center;
+}
+
+/* ===== 回退按钮 ===== */
+.back-btn {
+  position: fixed;
+  top: 25px;
+  left: 35px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  z-index: 10000;
+  transition: all 0.5s ease, transform 0.3s ease;
+}
+body.white-bg .back-btn { color: black; }
+body.dark-mode .back-btn { color: white; }
+
+/* ===== 底部 ===== */
+.library-footer {
+  max-width: 900px;
+  margin: 2em auto;
+  padding: 1em;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #c33;
+}
+</style>
+</head>
+<body class="white-bg">
+
+<!-- 顶栏文字悬浮 -->
+<div class="header">
+  <div id="tab-record" class="active float">Vinyl Shadow</div>
+  <div id="tab-project" class="inactive float">Project Shadow</div>
+</div>
+
+<!-- 回退按钮 -->
+<a href="../index.html" class="back-btn">&lt; Back</a>
+
+<!-- 音频区 -->
+<div id="section-record" class="section">
+  <div class="music-library-container">
+
+    <div class="music-item float breathe" data-src="../../Music_Library/Music/枯夏烟花（副歌）.wav">
+      <div class="music-info">
+        <div class="music-title">枯れた夏に花火 / Chorus </div>
+        <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e67e22;">#Lead Tracks</b> <b style="color:#b01b72;">#Lonely Island Artist（2025）</b></small>
+        <div class="music-artist">Artist：Yotsuba-Choco</div>
+      </div>
+      <div class="music-controls">
+        <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+        <button class="play-btn">▶</button>
+        <input type="number" class="volume-input" value="0" step="0.1" title="音量增益 -12~12">
+        <div class="progress-container"><div class="progress-bar"></div></div>
+      </div>
+    </div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/Slap Groove（枯夏烟花）.wav">
+  <div class="music-info">
+    <div class="music-title">枯れた夏に花火 / Groove</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e67e22;">#Lead Tracks</b> <b style="color:#b01b72;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/人类进化论（键盘Solo）.wav">
+  <div class="music-info">
+    <div class="music-title">人類進化論 / Keyboard Solo (Discarded)</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e62256;">#Core Track</b> <b style="color:#e73cc5;">#人類進化論</b> <b style="color:#e74c3c;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/人类进化论（爵士Swing-Zero）.wav">
+  <div class="music-info">
+    <div class="music-title">人類進化論 / Swing (Discarded)</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e62256;">#Core Track</b> <b style="color:#e73cc5;">#人類進化論</b> <b style="color:#e74c3c;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/枯夏烟花（Sax）.wav">
+  <div class="music-info">
+    <div class="music-title">枯れた夏に花火 / Chorus Sax</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e62256;">#Lead Tracks</b> <b style="color:#e74c3c;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/星色恋-和弦.wav">
+  <div class="music-info">
+    <div class="music-title">星色恋（2026） / Keyboard-Harmony</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e67e22;">#Vocaloid</b> <b style="color:#e74c3c;">#Life Pinnacle（2026）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/夜に争う（Demo）.wav">
+  <div class="music-info">
+    <div class="music-title">夜に争う（2026） / Demo</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#df22e6;">#Rock</b> <b style="color:#e74c3c;">#Life Pinnacle（2026）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/祭献明天.wav">
+  <div class="music-info">
+    <div class="music-title">祭献明天（2025） / Demo</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e62256;">#Electronic</b> <b style="color:#e74c3c;">#Short Business Song</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/青春と呼ばれる試験_Piano By Intro.wav">
+  <div class="music-info">
+    <div class="music-title">青春と呼ばれる試験 / Piano By Intro</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#b9284e;">#Piano</b> <b style="color:#e74c3c;">#Core Track</b> <b style="color:#ae1b91;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/このまま寂しさを忘れたい（Demo）.wav">
+  <div class="music-info">
+    <div class="music-title">このまま寂しさを忘れたい / Demo</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e67e22;">#J-Rock</b> <b style="color:#b01b72;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/夜尽颂歌.wav">
+  <div class="music-info">
+    <div class="music-title">夜の尽きぬ歌 / Symphony</div>
+    <small><b style="color:#9b59b6;">#Symphony</b> <b style="color:#e67e22;">#Classical</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/Nightsea City（Beat）.wav">
+  <div class="music-info">
+    <div class="music-title">Nightsea City / Lofi Girl x Native Not Selected</div>
+    <small><b style="color:#9b59b6;">#Lo-Fi</b> <b style="color:#e62256;">#Night</b> <b style="color:#e74c3c;">#Beat</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/前途（Instrument）.wav">
+  <div class="music-info">
+    <div class="music-title">前途（Instrument） / P and NP OST</div>
+    <small><b style="color:#9b59b6;">#OST</b> <b style="color:#e62256;">#Hope</b> <b style="color:#e74c3c;">#Participation</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+<div class="music-item float breathe" data-src="../../Music_Library/Music/人类进化论（主歌-Zero）.wav">
+  <div class="music-info">
+    <div class="music-title">人類進化論 / Zero (Discarded)</div>
+    <small><b style="color:#9b59b6;">#J-Pop</b> <b style="color:#e62256;">#Core Track</b> <b style="color:#e73cc5;">#人類進化論</b> <b style="color:#e74c3c;">#Lonely Island Artist（2025）</b></small>
+    <div class="music-artist">Artist：Yotsuba-Choco</div>
+  </div>
+  <div class="music-controls">
+    <span class="loop-text active float" data-state="autoplay">Autoplay</span>
+    <button class="play-btn">▶</button>
+    <input type="number" class="volume-input" value="0" step="0.1" title="Volume Gain -12~12">
+    <div class="progress-container"><div class="progress-bar"></div></div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<!-- 视频区 -->
+<div id="section-project" class="section hidden">
+  <div class="video-library-container">
+    <div class="video-item breathe">
+      <video controls src="../../Music_Library/Project_Video/星色恋-和声.mp4"></video>
+      <div class="video-caption"><h3>星色恋（2026） / Keyboard-Harmony</h3></div>
+    </div>
+    <div class="video-item breathe">
+      <video controls src="../../Music_Library/Project_Video/箱庭家族-はこにわかぞく-Demo.mp4"></video>
+      <div class="video-caption"><h3>箱庭家族 Hakoniwa Kazoku（2025） - Demo</h3></div>
+    </div>
+  </div>
+</div>
+
+<!-- 底部版权 -->
+<div class="library-footer">Official Demo Archive © 四つ葉ココちゃん.All Rights Reserved.</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tabRecord = document.getElementById('tab-record');
+  const tabProject = document.getElementById('tab-project');
+  const sectionRecord = document.getElementById('section-record');
+  const sectionProject = document.getElementById('section-project');
+  const backBtn = document.querySelector('.back-btn');
+  let currentAudio = null, currentPlayBtn = null, currentProgress = null;
+
+  // ===== 切换显示 section =====
+  function fadeSwitch(showEl, hideEl) {
+    hideEl.classList.add('hidden');
+    showEl.classList.remove('hidden');
+  }
+
+  // ===== 切换模式（白底/黑底） =====
+  function switchMode(mode) {
+    if (mode === 'white') {
+      document.body.classList.add('white-bg');
+      document.body.classList.remove('dark-mode');
+      backBtn.style.color = 'black';
+      tabRecord.classList.add('active'); tabRecord.classList.remove('inactive');
+      tabProject.classList.remove('active'); tabProject.classList.add('inactive');
+    } else {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('white-bg');
+      backBtn.style.color = 'white';
+      tabProject.classList.add('active'); tabProject.classList.remove('inactive');
+      tabRecord.classList.remove('active'); tabRecord.classList.add('inactive');
+    }
+  }
+
+  // ===== 顶栏点击事件 =====
+  tabRecord.addEventListener('click', () => {
+    fadeSwitch(sectionRecord, sectionProject);
+    switchMode('white');
+  });
+
+  tabProject.addEventListener('click', () => {
+    fadeSwitch(sectionProject, sectionRecord);
+    switchMode('dark');
+  });
+
+  // ===== 音乐播放控制 =====
+  document.querySelectorAll('.music-item').forEach(item => {
+    const playBtn = item.querySelector('.play-btn');
+    const progressBar = item.querySelector('.progress-bar');
+    const volInput = item.querySelector('.volume-input');
+    const audio = new Audio(item.dataset.src);
+
+    // 循环状态
+    const loopStates = ['No Way', 'Absolutely Cycle', 'Autoplay'];
+    let currentLoopIndex = 2; // 默认自動再生
+    audio.loop = false;
+
+    const loopText = item.querySelector('.loop-text');
+    loopText.addEventListener('click', () => {
+      currentLoopIndex = (currentLoopIndex + 1) % 3;
+      loopText.textContent = loopStates[currentLoopIndex];
+      loopText.classList.add('active');
+      audio.loop = loopStates[currentLoopIndex] === 'Absolutely Cycle';
+    });
+
+    loopText.addEventListener('dblclick', () => {
+      loopText.classList.remove('active');
+      loopText.textContent = 'No Way';
+      currentLoopIndex = 0;
+      audio.loop = false;
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (currentAudio && currentAudio !== audio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        if (currentPlayBtn) currentPlayBtn.textContent = '▶';
+        if (currentProgress) currentProgress.style.width = '0%';
+      }
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸';
+        currentAudio = audio;
+        currentPlayBtn = playBtn;
+        currentProgress = progressBar;
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶';
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) progressBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    });
+
+    audio.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      progressBar.style.width = '0%';
+      if (loopStates[currentLoopIndex] === 'Autoplay') {
+        const items = Array.from(document.querySelectorAll('.music-item'));
+        const index = items.indexOf(item);
+        const next = items[index + 1] || items[0];
+        next.querySelector('.play-btn').click();
+      }
+      if (currentAudio === audio) {
+        currentAudio = null;
+        currentPlayBtn = null;
+        currentProgress = null;
+      }
+    });
+
+    volInput.addEventListener('input', () => {
+      let gain = parseFloat(volInput.value);
+      if (isNaN(gain)) gain = 0;
+      gain = Math.max(-12, Math.min(12, gain));
+      audio.volume = (gain + 12) / 24;
+    });
+  });
+
+  // ===== 呼吸动画随机化 =====
+  document.querySelectorAll('.breathe').forEach(el => {
+    const duration = (3 + Math.random() * 2).toFixed(2) + 's';
+    const delay = (Math.random() * 2).toFixed(2) + 's';
+    el.style.animationDuration = duration;
+    el.style.animationDelay = delay;
+  });
+
+  // ===== 初始化 =====
+  fadeSwitch(sectionRecord, sectionProject); // 默认显示音频区
+  switchMode('white');
+});
+</script>
+</body>
+</html>
